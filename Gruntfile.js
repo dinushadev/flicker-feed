@@ -130,7 +130,7 @@ module.exports = function(grunt) {
             server: {
                 options: {
                     script: 'dist/server/main.js',
-                    port: 9999
+                    port: 8080
                 }
             }
         },

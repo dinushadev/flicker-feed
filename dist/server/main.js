@@ -59,17 +59,17 @@ app.get('/', function(req, res) {
 app.get('/search/:tags', function(req, res) {
     var potoList = [];
 
-    var tags = req.param("tags");;
+    var tags = req.param("tags");
     var url = 'https://api.flickr.com/services/feeds/photos_public.gne?tags='+tags;
     console.log('taggssssssssssssssssssss '+url);
 
-    var req = request(url),
-        feedparser = new FeedParser();
+    var request = request(url);
+      var  feedparser = new FeedParser();
 
-    req.on('error', function(error) {
+    request.on('error', function(error) {
         // handle any request errors
     });
-    req.on('response', function(res) {
+    request.on('response', function(res) {
         var stream = this;
 
         if (res.statusCode != 200) return this.emit('error', new Error('Bad status code'));
@@ -84,8 +84,8 @@ app.get('/search/:tags', function(req, res) {
     });
     feedparser.on('readable', function() {
         // This is where the action is!
-        var stream = this,
-            meta = this.meta // **NOTE** the "meta" is always available in the context of the feedparser instance
+        var stream = this;
+          var  meta = this.meta // **NOTE** the "meta" is always available in the context of the feedparser instance
             ,
             item;
 
@@ -113,8 +113,8 @@ app.get('/feeds', function(req, res) {
 
     var url = 'https://api.flickr.com/services/feeds/photos_public.gne';
 
-    var req = request(url),
-        feedparser = new FeedParser();
+    var req = request(url);
+       var feedparser = new FeedParser();
 
     req.on('error', function(error) {
         // handle any request errors

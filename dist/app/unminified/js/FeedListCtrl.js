@@ -1,5 +1,6 @@
 angular.module('expressSeed')
-    .controller('FeedListCtrl', ['$scope', 'FeedSvc', '$sce', '$rootScope', function($scope, FeedSvc, $sce, $rootScope) {
+    .controller('FeedListCtrl', ['$scope', 'FeedSvc', '$sce', '$rootScope',
+     function($scope, FeedSvc, $sce, $rootScope) {
 
         var self = this;
 

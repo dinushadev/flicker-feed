@@ -17,7 +17,7 @@ angular.module('expressSeed').factory('FeedSvc', function($http) {
             });
 
 
-        },
+        };
         feeds.searchByTag = function(tags, callback) {
 
             $http({
@@ -36,7 +36,7 @@ angular.module('expressSeed').factory('FeedSvc', function($http) {
             });
 
 
-        }
+        };
 
     return feeds;
 
