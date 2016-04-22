@@ -27,5 +27,11 @@
         "consolidate": "0.10.0",
         "handlebars": "2.0.0",
         "request":"*"
+    },
+
+     "scripts": {
+    "postinstall": "bower install",
+    "prestart": "npm install",
+    "start": "node server/main.js"
     }
 }

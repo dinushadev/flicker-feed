@@ -1,12 +1,9 @@
-<h1>Welcome to express-seed</h1>
-<div ng-controller='FeedListCtrl as feed'>
-	
-<div ng-repeat="poto in feed.feedList track by $index">
-	<div class="panel panel-default">
-  <div class="panel-heading" ng-bind="poto.title"></div>
-  <div class="panel-body">
-    <div ng-bind-html="feed.toHtmlVal(poto.dis)"></div>
+
+<div class="panel panel-info" align="center" ng-repeat="poto in feed.feedList track by $index">
+  <div class="panel-heading">
+    <h3 class="panel-title" ng-bind="poto.title"></h3>
   </div>
-</div>
-</div>
+  <div class="panel-body" ng-bind-html="feed.toHtmlVal(poto.dis)">
+ 
+  </div>
 </div>

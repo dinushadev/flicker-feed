@@ -16,7 +16,7 @@ var globalConfig = {
 };
 
 var rootPath = path.dirname(__dirname);
-var port = Number(process.env.PORT || 9999);
+var port = Number(process.env.PORT || 8080);
 
 app.set('views', path.join(rootPath, 'server'));
 app.engine('html', cons.handlebars);
@@ -143,8 +143,7 @@ app.get('/feeds', function(req, res) {
           // /  console.log(item);
             var feed = {
                 'title': item.title,
-                'dis': item.description,
-                'url': item.image.url
+                'dis': item.description
             };
             potoList.push(feed);
         }

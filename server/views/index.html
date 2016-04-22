@@ -6,10 +6,11 @@
     <link href="/app.css" rel="stylesheet" />
     <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css">
     <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap-theme.css">
+    <title>Flicker Feed</title>
     <!-- build:js /app.js -->
 </head>
 
-<body ng-app="expressSeed">
+<body ng-app="expressSeed" ng-controller='FeedListCtrl as feed'>
     <nav class="navbar navbar-inverse navbar-fixed-top">
         <div class="container">
             <div class="navbar-header">
@@ -22,13 +23,13 @@
                     <li><a ui-sref="home">Home</a></li>
                     <li><a ui-sref="about">About</a></li>
                 </ul>
-                <ul class="nav navbar-nav navbar-right" ng-controller="SearchCtrl    ">
+                <ul class="nav navbar-nav navbar-right">
                     <li>
                         <div class="navbar-form navbar-left" role="search">
                             <div class="form-group">
                                 <input type="text" ng-model="searchVal" class="form-control" placeholder="Search">
                             </div>
-                            <button type="button" ng-click="search()" class="btn btn-default">Search</button>
+                            <button type="button" ng-click="feed.search()" class="btn btn-default">Search</button>
                         </div>
                     </li>
                 </ul>
@@ -36,7 +37,10 @@
             <!--/.nav-collapse -->
         </div>
     </nav>
+    <div>
+        
     <div ng-include="'/app.html'"></div>
+    </div>
     <!-- bower -->
     <script src="bower_components/jquery/dist/jquery.js"></script>
     <script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
@@ -44,10 +48,10 @@
     <!-- endbower -->
     <script src="/bower_components/angular-sanitize/angular-sanitize.js"></script>
     <!-- appcode -->
-     <script src="/js/FeedCvs.js"></script>
-    <script src="/js/FeedListCtrl.js"></script>
-        <script src="/js/FeedSearchCtrl.js"></script>
     <script src="/modules.js"></script>
+    <script src="/js/FeedCvs.js"></script>
+    <script src="/js/FeedListCtrl.js"></script>
+    <script src="/js/FeedSearchCtrl.js"></script>
     <script src="/app.js"></script>
     <!-- endappcode -->
     <!-- endbuild -->

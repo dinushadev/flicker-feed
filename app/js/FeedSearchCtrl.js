@@ -1,4 +1,4 @@
-angular.module('expressSeed')
+/*angular.module('expressSeed')
     .controller('SearchCtrl', ['$scope', 'FeedSvc', '$sce', '$rootScope', function($scope, FeedSvc, $sce,$rootScope) {
 
         $scope.searchVal = '';
@@ -17,3 +17,4 @@ angular.module('expressSeed')
        
 
     }]);
+*/
