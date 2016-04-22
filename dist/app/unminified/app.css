@@ -1,0 +1,9 @@
+body {
+  padding-top: 50px;
+  font-family: arial, sans-serif;
+}
+body h1 {
+  font-size: 3.5em;
+  color: gray;
+  text-align: center;
+}
