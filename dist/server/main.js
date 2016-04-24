@@ -140,7 +140,6 @@ function callFlickerFeeds(url, callbacak) {
        // item = stream.read();
         while ( item = stream.read()) {
             // /  console.log(item);
-                  console.log('item:'+item);
             var feed = {
                 'title': item.title,
                 'dis': item.description
