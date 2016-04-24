@@ -4,9 +4,8 @@ var express = require('express');
 var cons = require('consolidate');
 var request = require('request');
 var cookieParser = require('cookie-parser');
-
 var FeedParser = require('feedparser');
-var fs = require('fs');
+
 
 var app = module.exports = express();
 
@@ -17,6 +16,9 @@ var globalConfig = {
 
 var rootPath = path.dirname(__dirname);
 var port = Number(process.env.PORT || 8080);
+
+//move to cofigs files
+var flickerFeedEndPoint = 'https://api.flickr.com/services/feeds/photos_public.gne';
 
 app.set('views', path.join(rootPath, 'server'));
 app.engine('html', cons.handlebars);
@@ -56,105 +58,26 @@ app.get('/', function(req, res) {
 });
 
 
+
+
 app.get('/search/:tags', function(req, res) {
-    var potoList = [];
-
+    
     var tags = req.param("tags");
-    var url = 'https://api.flickr.com/services/feeds/photos_public.gne?tags='+tags;
-    console.log('taggssssssssssssssssssss '+url);
-
-    var request = request(url);
-      var  feedparser = new FeedParser();
-
-    request.on('error', function(error) {
-        // handle any request errors
+    var url = flickerFeedEndPoint + '?tags=' + tags;
+    
+     callFlickerFeeds(url, function(data) {
+        res.json(data);
     });
-    request.on('response', function(res) {
-        var stream = this;
-
-        if (res.statusCode != 200) return this.emit('error', new Error('Bad status code'));
-
-        stream.pipe(feedparser);
-    });
-
-
-    feedparser.on('error', function(error) {
-        // always handle errors
-        console.log(error);
-    });
-    feedparser.on('readable', function() {
-        // This is where the action is!
-        var stream = this;
-          var  meta = this.meta // **NOTE** the "meta" is always available in the context of the feedparser instance
-            ,
-            item;
-
-        while (item = stream.read()) {
-        //    console.log(item);
-            var feed = {
-                'title': item.title,
-                'dis': item.description
-            };
-            potoList.push(feed);
-        }
-        // res.send(potoList);
-    });
-
-    feedparser.on('end', function() {
-        res.send(potoList);
-    });
-
 
 });
 
 
 app.get('/feeds', function(req, res) {
-    var potoList = [];
-
-    var url = 'https://api.flickr.com/services/feeds/photos_public.gne';
-
-    var req = request(url);
-       var feedparser = new FeedParser();
-
-    req.on('error', function(error) {
-        // handle any request errors
+    
+    var url = flickerFeedEndPoint;
+    callFlickerFeeds(url, function(data) {
+        res.json(data);
     });
-    req.on('response', function(res) {
-        var stream = this;
-
-        if (res.statusCode != 200) return this.emit('error', new Error('Bad status code'));
-
-        stream.pipe(feedparser);
-    });
-
-
-    feedparser.on('error', function(error) {
-        // always handle errors
-        console.log(error);
-    });
-    feedparser.on('readable', function() {
-        // This is where the action is!
-        var stream = this,
-            meta = this.meta // **NOTE** the "meta" is always available in the context of the feedparser instance
-            ,
-            item;
-
-        while (item = stream.read()) {
-          // /  console.log(item);
-            var feed = {
-                'title': item.title,
-                'dis': item.description
-            };
-            potoList.push(feed);
-        }
-        // res.send(potoList);
-    });
-
-    feedparser.on('end', function() {
-        res.send(potoList);
-    });
-
-
 });
 
 app.use(function(req, res) {
@@ -162,7 +85,8 @@ app.use(function(req, res) {
 });
 
 app.listen(port, function() {
-    console.log('Server listening on port ' + port);
+    console.log('Server listening on port ' + port + ' environment ' + globalConfig.environment);
+
 });
 
 function renderIndex(config, res) {
@@ -185,4 +109,48 @@ function addPathPrefix(filePath, prefix) {
 
 function getFileExtension(filePath) {
     return filePath.split('.').pop();
+}
+
+
+function callFlickerFeeds(url, callbacak) {
+    var feedReq = request(url);
+    var potoList = [];
+    var feedparser = new FeedParser();
+
+    feedReq.on('error', function(error) {
+        // handle any request errors
+    });
+    feedReq.on('response', function(res) {
+        var stream = this;
+
+        if (res.statusCode != 200) return this.emit('error', new Error('Bad status code'));
+
+        stream.pipe(feedparser);
+    });
+
+    feedparser.on('error', function(error) {
+        console.error("Unexpected Error thrown " + error);
+    });
+    feedparser.on('readable', function() {
+        // This is where the action is!
+        var stream = this,
+            item;
+           // item = stream.read();
+      
+       // item = stream.read();
+        while ( item = stream.read()) {
+            // /  console.log(item);
+                  console.log('item:'+item);
+            var feed = {
+                'title': item.title,
+                'dis': item.description
+            };
+            potoList.push(feed);
+        }
+        // res.send(potoList);
+    });
+
+    feedparser.on('end', function() {
+        callbacak(potoList);
+    });
 }

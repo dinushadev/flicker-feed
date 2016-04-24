@@ -1,7 +1,8 @@
-/*describe('app initialization', function() {
+describe('app initialization', function() {
 
     it('should not fail', function() {
-        angular.bootstrap(null, ['expressSeed']);
+        angular.bootstrap(null, ['FlickerApp']);
     });
 
-});*/
+});
+
